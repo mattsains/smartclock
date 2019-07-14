@@ -1,0 +1,15 @@
+# For more options and information see
+# http://rpf.io/configtxt
+
+disable_overscan=1
+dtparam=audio=on
+
+[all]
+hdmi_force_hotplug=1
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt=480 320 60 1 0 0 0
+dtparam=i2c_arm=on
+dtparam=spi=on
+enable_uart=1
+dtoverlay=tft35a:rotate=90
