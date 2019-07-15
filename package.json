@@ -4,7 +4,7 @@
   "description": "A smartclock",
   "main": "index.js",
   "scripts": {
-    "start": "node --experimental-modules --harmony index.js",
+    "start": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +17,14 @@
     "url": "https://github.com/mattsains/smartclock/issues"
   },
   "homepage": "https://github.com/mattsains/smartclock#readme",
+  "dependencies": {
+    "canvas": "^2.5.0",
+    "fs": "0.0.1-security"
+  },
   "devDependencies": {
-    "raylib": "^0.1.1"
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
+    "html-webpack-plugin": "^3.2.0"
   }
 }
