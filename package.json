@@ -2,7 +2,6 @@
   "name": "smartclock",
   "version": "1.0.0",
   "description": "A smartclock",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node --experimental-modules --harmony index.js",
