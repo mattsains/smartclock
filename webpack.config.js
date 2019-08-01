@@ -5,12 +5,22 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            }
+        ]
+    },
     devServer: {
         contentBase: __dirname,
         port: 3000,
         publicPath: "http://localhost:3000/",
         hot: true
     },
+    devtool: "inline-source-map",
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist')
