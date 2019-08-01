@@ -1,4 +1,5 @@
 import Reconciler from "react-reconciler";
+import renderTree from './renderTree';
 
 export default class CanvasRenderer {
   constructor(canvasContext) {
@@ -45,25 +46,7 @@ export default class CanvasRenderer {
         rootContainerInstance,
         currentHostContext
       ) => {
-        // TODO: refactor
-        const writeToScreen = item => {
-          this.canvasContext.clearRect(0, 0, 480, 320);
-          switch (item.type) {
-            case 'strokeRect': canvasContext.strokeRect(item.props.x, item.props.y, item.props.width, item.props.height);
-            case 'context': {
-              if (item.props.strokeStyle) canvasContext.strokeStyle = item.props.strokeStyle;
-            };
-          }
-        
-          // for some reason, sometimes the children property is not an array.
-          if (item.props.children instanceof Array)
-            item.props.children.forEach(writeToScreen);
-          else if (item.props.children != undefined)
-          writeToScreen(item.props.children);
-        }
-
-        writeToScreen(instance);
-
+        renderTree(instance, canvasContext);
         return false;
       },
       prepareForCommit: function (rootContainerInstance) { },
