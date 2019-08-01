@@ -19,7 +19,7 @@ if (typeof document === 'undefined') {
 const ctx = canvas.getContext("2d");
 
 //TODO: replace with useful component
-const testElement = <Rectangle x='0' y='0' height='10' width='20' strokeStyle="green"></Rectangle>
+const testElement = <Rectangle x={0} y='0' height='10' width='20' strokeStyle="green"></Rectangle>
 
 const updateDisplay = () => {
   if (typeof document === 'undefined') {
@@ -30,4 +30,4 @@ const updateDisplay = () => {
   }
 }
 
-new CustomRenderer(ctx).render(testElement, updateDisplay);
+new CustomRenderer(ctx, updateDisplay).render(testElement);

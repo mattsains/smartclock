@@ -29,4 +29,9 @@ const popContext = (item, context) => {
     context.restore();
 }
 
-export default function(tree, context) { writeToScreen(tree, context) };
+export default function(tree, context) { 
+    // debugging:
+    console.log("Rendering:", tree);
+
+    writeToScreen(tree, context) 
+};
