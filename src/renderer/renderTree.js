@@ -1,5 +1,4 @@
 const writeToScreen = (item, context) => {
-    context.clearRect(0, 0, 480, 320);
     switch (item.type) {
         case 'strokeRect': strokeRect(item, context);
         case 'context': pushContext(item, context);
@@ -33,5 +32,6 @@ export default function(tree, context) {
     // debugging:
     console.log("Rendering:", tree);
 
+    context.clearRect(0, 0, 480, 320);
     writeToScreen(tree, context) 
 };
