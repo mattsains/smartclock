@@ -1,10 +1,9 @@
-import React from "react";
-import CustomRenderer from "./renderer";
-import Rectangle from './components/rectangle';
+import CanvasRenderer from './renderer';
+import UI from './ui';
 
 let canvas;
 if (typeof document === 'undefined') {
-  const { createCanvas } = require('canvas');
+  const { createCanvas } = require('canvas'); // eslint-disable-line global-require
   canvas = createCanvas(480, 320);
 } else {
   canvas = document.createElement('canvas');
@@ -13,21 +12,18 @@ if (typeof document === 'undefined') {
   canvas.height = 320;
   canvas.style.position = 'absolute';
   canvas.style.border = '2px solid #f00';
-  canvas.style.backgroundColor = '#000000'
+  canvas.style.backgroundColor = '#000000';
   document.body.appendChild(canvas);
 }
-const ctx = canvas.getContext("2d");
-
-//TODO: replace with useful component
-const testElement = <Rectangle x={0} y='0' height='10' width='20' strokeStyle="green"></Rectangle>
+const ctx = canvas.getContext('2d');
 
 const updateDisplay = () => {
   if (typeof document === 'undefined') {
-    const fs = require("fs");
-    const fb = fs.openSync("/dev/fb0", "w");
-    const buff = canvas.toBuffer("raw");
+    const fs = require('fs'); // eslint-disable-line global-require
+    const fb = fs.openSync('/dev/fb0', 'w');
+    const buff = canvas.toBuffer('raw');
     fs.writeSync(fb, buff, 0, buff.byteLength, 0);
   }
-}
+};
 
-new CustomRenderer(ctx, updateDisplay).render(testElement);
+new CanvasRenderer(ctx, updateDisplay).render(UI);

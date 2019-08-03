@@ -1,37 +1,41 @@
+function strokeRect(item, context) {
+  context.strokeRect(item.props.x, item.props.y, item.props.width, item.props.height);
+}
+
+function pushContext(item, context) {
+  context.save();
+  Object.assign(context, item.props);
+}
+
+function popContext(item, context) {
+  context.restore();
+}
+
+function fillText(item, context) {
+  context.fillText(item.props.text, item.props.x, item.props.y, item.props.maxWidth);
+}
+
 const writeToScreen = (item, context) => {
-    switch (item.type) {
-        case 'strokeRect': strokeRect(item, context);
-        case 'context': pushContext(item, context);
-    }
+  switch (item.type) {
+    case 'strokeRect': strokeRect(item, context); break;
+    case 'context': pushContext(item, context); break;
+    case 'fillText': fillText(item, context); break;
+    default: throw Error(`Don't know how to render element '${item.type}'`);
+  }
 
-    // for some reason, sometimes the children property is not an array.
-    if (item.props.children instanceof Array)
-        item.props.children.forEach(item => writeToScreen(item, context));
-    else if (item.props.children != undefined)
-        writeToScreen(item.props.children, context);
+  item.children.forEach(child => writeToScreen(child, context));
 
-    switch(item.type) {
-        case 'context': popContext(item, context);
-    }
-}
-
-const strokeRect = (item, context) => {
-    context.strokeRect(item.props.x, item.props.y, item.props.width, item.props.height);
-}
-
-const pushContext = (item, context) => {
-    context.save();
-    if (item.props.strokeStyle) context.strokeStyle = item.props.strokeStyle;
-}
-
-const popContext = (item, context) => {
-    context.restore();
-}
-
-export default function(tree, context) { 
-    // debugging:
-    console.log("Rendering:", tree);
-
-    context.clearRect(0, 0, 480, 320);
-    writeToScreen(tree, context) 
+  // For elements that have children, usually we execute something before rendering the children, and then something after.
+  switch (item.type) {
+    case 'context': popContext(item, context); break;
+    default: // nothing.
+  }
 };
+
+export default function (tree, context) {
+  // debugging:
+  console.log('Rendering:', tree);
+
+  context.clearRect(0, 0, 480, 320);
+  writeToScreen(tree, context);
+}

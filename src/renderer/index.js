@@ -1,6 +1,5 @@
-import Reconciler from "react-reconciler";
+import Reconciler from 'react-reconciler';
 import renderTree from './renderTree';
-import toArray from 'react';
 
 export default class CanvasRenderer {
   constructor(canvasContext, renderCallback) {
@@ -10,58 +9,44 @@ export default class CanvasRenderer {
 
     const hostConfig = {
       now: Date.now,
-      getRootHostContext: function (nextRootInstance) {
-        let rootContext = {};
+      getRootHostContext() {
+        const rootContext = {};
         return rootContext;
       },
-      getChildHostContext: function (parentContext, fiberType, rootInstance) {
-        let context = { type: fiberType };
+      getChildHostContext(fiberType) {
+        const context = { type: fiberType };
         return context;
       },
-      shouldSetTextContent: function (type, nextProps) {
-        return false // this makes sure that every element becomes an Element instance and not a prop (I think)
+      shouldSetTextContent() {
+        return false; // this makes sure that every element becomes an Element instance and not a prop (I think)
       },
-      createTextInstance: function (
-        newText,
-        rootContainerInstance,
-        currentHostContext,
-        workInProgress
-      ) { },
-      createInstance: function (
+      createTextInstance() { },
+      createInstance(
         type,
         props,
-        rootContainerInstance,
-        currentHostContext,
-        workInProgress
       ) {
         return CanvasRenderer.createElement(type, props);
       },
-      appendInitialChild: (parent, child) => { parent.appendChild(child) },
-      finalizeInitialChildren: (
-        instance,
-        type,
-        newProps,
-        rootContainerInstance,
-        currentHostContext
-      ) => { },
-      prepareForCommit: function (rootContainerInstance) { },
-      prepareUpdate: function (instance, type, oldProps, newProps) {
+      appendInitialChild: (parent, child) => { parent.appendChild(child); },
+      finalizeInitialChildren: () => { },
+      prepareForCommit() { },
+      prepareUpdate(oldProps, newProps) {
         // I know this function needs to exist, but I'm not sure its purpose.
         // I know it's supposed to return the value of props that have changed.
         const propKeys = new Set(
           Object.keys(newProps).concat(
-            Object.keys(oldProps)
-          )
+            Object.keys(oldProps),
+          ),
         ).values();
         const payload = [];
-        for (let key of propKeys) {
+        propKeys.forEach((key) => {
           if (
-            key !== 'children' && // text children shouldn't exist, but I am removing them here just in case.
-            oldProps[key] !== newProps[key]
+            key !== 'children' // text children shouldn't exist, but I am removing them here just in case.
+            && oldProps[key] !== newProps[key]
           ) {
-            payload.push({ [key]: newProps[key] })
+            payload.push({ [key]: newProps[key] });
           }
-        }
+        });
         return payload;
       },
       resetAfterCommit: (instance) => {
@@ -69,11 +54,11 @@ export default class CanvasRenderer {
         instance.children.forEach(child => renderTree(child, canvasContext));
         renderCallback();
       },
-      commitMount: (element, type, newProps, fiberNode) => {  },
+      commitMount: () => { },
       commitUpdate: (element, updatePayload, type, oldProps, newProps) => { element.setPropsTo(newProps); },
-      appendChildToContainer: (parent, child) => { parent.appendChild(child) },
-      removeChildFromContainer: (parent, child) => { parent.removeChild(child) },
-      supportsMutation: true
+      appendChildToContainer: (parent, child) => { parent.appendChild(child); },
+      removeChildFromContainer: (parent, child) => { parent.removeChild(child); },
+      supportsMutation: true,
     };
 
     this.reconcilerInstance = Reconciler(hostConfig);
@@ -89,13 +74,13 @@ export default class CanvasRenderer {
         this.children.push(child);
       },
 
-      setPropsTo(props) {
-        this.props = props;
+      setPropsTo(newProps) {
+        this.props = newProps;
       },
 
-      removeChild(child) {
-        this.children = this.children.filter(child => child != child);
-      }
+      removeChild(childToRemove) {
+        this.children = this.children.filter(child => child !== childToRemove);
+      },
     };
   }
 
@@ -110,7 +95,7 @@ export default class CanvasRenderer {
     this.reconcilerInstance.updateContainer(
       element,
       container,
-      parentComponent
+      parentComponent,
     ); // Start reconcilation and render the result
   }
-};
+}
