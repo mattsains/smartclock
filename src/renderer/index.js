@@ -1,11 +1,13 @@
 import Reconciler from 'react-reconciler';
-import renderTree from './renderTree';
+import RenderTree from './renderTree';
 
 export default class CanvasRenderer {
-  constructor(canvasContext, renderCallback) {
+  constructor(canvas, platform) {
     this.renderingChildren = [];
-    this.canvasContext = canvasContext;
-    this.renderCallback = renderCallback;
+    this.canvas = canvas;
+    this.canvasContext = canvas.getContext('2d');
+    this.platform = platform;
+    this.renderTree = new RenderTree(this.canvasContext, this.platform);
 
     const hostConfig = {
       now: Date.now,
@@ -51,8 +53,8 @@ export default class CanvasRenderer {
       },
       resetAfterCommit: (instance) => {
         // Reset seems like the best place to render, it seems to be called whenever the DOM has changed.
-        instance.children.forEach(child => renderTree(child, canvasContext));
-        renderCallback();
+        instance.children.forEach(child => this.renderTree.render(child));
+        platform.saveCanvas(this.canvas);
       },
       commitMount: () => { },
       commitUpdate: (element, updatePayload, type, oldProps, newProps) => { element.setPropsTo(newProps); },

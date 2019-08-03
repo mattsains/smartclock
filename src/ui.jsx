@@ -1,6 +1,13 @@
 import React from 'react';
-import Text from './components/primatives/text';
+import Image from './components/primatives/image';
 
-export default (
-  <Text x={0} y={48} text="hello" style="red" font="48px serif" />
-);
+export default function (platform) {
+  return (
+    <Image
+      src="https://dummyimage.com/100/ffffff/000000"
+      platform={platform}
+      x={0}
+      y={0}
+    />
+  );
+}

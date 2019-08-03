@@ -25,6 +25,7 @@ module.exports = {
   rules: {
     'no-param-reassign': 0,
     'no-console': 0,
+    'class-methods-use-this': 0,
     'react/style-prop-object': 0,
     'max-len': ['error', {'code': 140}],
   },
