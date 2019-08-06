@@ -53,11 +53,14 @@ export default class CanvasRenderer {
       },
       resetAfterCommit: (instance) => {
         // Reset seems like the best place to render, it seems to be called whenever the DOM has changed.
-        instance.children.forEach(child => this.renderTree.render(child));
+        this.renderTree.render(instance);
         platform.saveCanvas(this.canvas);
       },
       commitMount: () => { },
       commitUpdate: (element, updatePayload, type, oldProps, newProps) => { element.setPropsTo(newProps); },
+      insertInContainerBefore: (container, child, beforeChild) => {
+        container.addChildBefore(child, beforeChild);
+      },
       appendChildToContainer: (parent, child) => { parent.appendChild(child); },
       removeChildFromContainer: (parent, child) => { parent.removeChild(child); },
       supportsMutation: true,
@@ -82,6 +85,11 @@ export default class CanvasRenderer {
 
       removeChild(childToRemove) {
         this.children = this.children.filter(child => child !== childToRemove);
+      },
+
+      addChildBefore(child, beforeChild) {
+        const index = this.children.indexOf(beforeChild);
+        this.children.splice(index, 0, child);
       },
     };
   }

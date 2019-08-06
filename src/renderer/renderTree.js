@@ -22,7 +22,7 @@ export default class TreeRenderer {
   }
 
   image(item) {
-    this.context.drawImage(item.props.image, item.props.x, item.props.y);
+    this.context.drawImage(item.props.image, item.props.x, item.props.y, item.props.width, item.props.height);
   }
 
   writeToScreen(item) {
@@ -31,6 +31,7 @@ export default class TreeRenderer {
       case 'context': this.pushContext(item); break;
       case 'fillText': this.fillText(item); break;
       case 'image': this.image(item); break;
+      case 'root': break;
       default: throw Error(`Don't know how to render element '${item.type}'`);
     }
 
@@ -48,6 +49,9 @@ export default class TreeRenderer {
     console.log('Rendering:', tree);
 
     this.context.clearRect(0, 0, 480, 320);
+    if (tree instanceof Array) {
+      tree.forEach(c => this.writeToScreen(c));
+    }
     this.writeToScreen(tree);
   }
 }

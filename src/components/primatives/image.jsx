@@ -9,7 +9,14 @@ export default class Image extends React.Component {
     platform: PropTypes.instanceOf(Platform).isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
   };
+
+  static defaultProps = {
+    width: undefined,
+    height: undefined,
+  }
 
   constructor(props) {
     super(props);
@@ -22,12 +29,12 @@ export default class Image extends React.Component {
   }
 
   render() {
-    const { x, y } = this.props;
+    const { x, y, width, height } = this.props;
     const { loading, image } = this.state;
     if (loading) {
       return (null);
     }
 
-    return (<image image={image} x={x} y={y} />);
+    return (<image image={image} x={x} y={y} width={width} height={height} />);
   }
 }
