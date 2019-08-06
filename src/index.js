@@ -1,3 +1,4 @@
+import React from 'react';
 import CanvasRenderer from './renderer';
 import UI from './ui';
 import { Browser, Node } from './renderer/platform';
@@ -11,4 +12,4 @@ if (typeof document === 'undefined') {
 
 const canvas = platform.createCanvas();
 
-new CanvasRenderer(canvas, platform).render(UI(platform));
+new CanvasRenderer(canvas, platform).render((<UI platform={platform} />));
