@@ -65,3 +65,5 @@ typings/
 
 #testing boostrap
 dist
+
+apikey.json
