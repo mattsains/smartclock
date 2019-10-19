@@ -49,9 +49,6 @@ export default class TreeRenderer {
   }
 
   render(tree) {
-    // debugging:
-    console.log('Rendering:', tree);
-
     this.context.clearRect(0, 0, 480, 320);
     if (tree instanceof Array) {
       tree.forEach(c => this.writeToScreen(c));

@@ -18,7 +18,7 @@ export default class UI extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { loading: true };
+    this.state = { loading: true, timeString: new Date().toLocaleTimeString() };
   }
 
   componentDidMount() {
@@ -31,6 +31,10 @@ export default class UI extends React.Component {
 
         this.setState({ loading: false, imgSrc, temp });
       });
+
+    setInterval(() => {
+      this.setState({ timeString: new Date().toLocaleTimeString() });
+    }, 1000);
   }
 
   getWeatherImageSrc(weather) {
@@ -55,13 +59,19 @@ export default class UI extends React.Component {
 
   render() {
     const { platform } = this.props;
-    const { loading, imgSrc, temp } = this.state;
+    const {
+      loading,
+      imgSrc,
+      temp,
+      timeString,
+    } = this.state;
     const iconSize = 90;
     const iconY = (320 - iconSize) / 2;
 
     if (loading) return null;
 
     return [
+      (<Text font="30px Serif" x={0} y={0} textBaseline="top" style="white" key="t2" text={timeString} />),
       (<Image
         key="icon"
         src={`assets/${imgSrc}.png`}

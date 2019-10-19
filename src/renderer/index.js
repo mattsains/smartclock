@@ -32,25 +32,7 @@ export default class CanvasRenderer {
       appendInitialChild: (parent, child) => { parent.appendChild(child); },
       finalizeInitialChildren: () => { },
       prepareForCommit() { },
-      prepareUpdate(oldProps, newProps) {
-        // I know this function needs to exist, but I'm not sure its purpose.
-        // I know it's supposed to return the value of props that have changed.
-        const propKeys = new Set(
-          Object.keys(newProps).concat(
-            Object.keys(oldProps),
-          ),
-        ).values();
-        const payload = [];
-        propKeys.forEach((key) => {
-          if (
-            key !== 'children' // text children shouldn't exist, but I am removing them here just in case.
-            && oldProps[key] !== newProps[key]
-          ) {
-            payload.push({ [key]: newProps[key] });
-          }
-        });
-        return payload;
-      },
+      prepareUpdate: () => ({}),
       resetAfterCommit: (instance) => {
         // Reset seems like the best place to render, it seems to be called whenever the DOM has changed.
         this.renderTree.render(instance);
