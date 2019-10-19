@@ -1,6 +1,5 @@
 export default class TreeRenderer {
-  constructor(canvas, context, platform) {
-    this.canvas = canvas;
+  constructor(context, platform) {
     this.context = context;
     this.platform = platform;
   }
@@ -58,6 +57,5 @@ export default class TreeRenderer {
       tree.forEach(c => this.writeToScreen(c));
     }
     this.writeToScreen(tree);
-    this.platform.saveCanvas(this.canvas);
   }
 }

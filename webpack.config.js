@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const isProd = process.env.DEV === undefined;
 
 module.exports = {
-  mode: isProd ? 'production' : 'development',
+  mode: 'development',
   target: isProd ? 'node' : 'web',
   entry: './src/index.js',
   module: {
