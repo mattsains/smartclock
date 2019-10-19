@@ -1,5 +1,5 @@
 import Reconciler from 'react-reconciler';
-import RenderTree from './renderTree';
+import RenderTree from './tree-renderer';
 
 export default class CanvasRenderer {
   constructor(canvas, platform) {
@@ -7,7 +7,7 @@ export default class CanvasRenderer {
     this.canvas = canvas;
     this.canvasContext = canvas.getContext('2d');
     this.platform = platform;
-    this.renderTree = new RenderTree(this.canvasContext, this.platform);
+    this.renderTree = new RenderTree(this.canvas, this.canvasContext, this.platform);
 
     const hostConfig = {
       now: Date.now,

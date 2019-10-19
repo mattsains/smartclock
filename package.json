@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "DEV=true webpack-dev-server",
+    "build": "webpack",
     "start-prod": "webpack && node dist/main.js"
   },
   "repository": {
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/mattsains/smartclock#readme",
   "dependencies": {
     "canvas": "^2.5.0",
+    "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-reconciler": "^0.20.4"

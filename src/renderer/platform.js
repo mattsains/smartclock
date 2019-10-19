@@ -28,6 +28,7 @@ export class Node extends Platform {
   constructor() {
     super();
     this.canvasLib = require('canvas'); // eslint-disable-line global-require
+    this.canvasLib.registerFont('/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf', { family: 'dja' });
   }
 
   getImage(src) {

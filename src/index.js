@@ -12,4 +12,6 @@ if (typeof document === 'undefined') {
 
 const canvas = platform.createCanvas();
 
+console.log('hello');
+
 new CanvasRenderer(canvas, platform).render((<UI platform={platform} />));
