@@ -19,7 +19,11 @@ export default class TreeRenderer {
   }
 
   fillText(item) {
-    this.context.fillText(item.props.text, item.props.x, item.props.y, item.props.maxWidth);
+    if (item.props.maxWidth === undefined) {
+      this.context.fillText(item.props.text, item.props.x, item.props.y);
+    } else {
+      this.context.fillText(item.props.text, item.props.x, item.props.y, item.props.maxWidth);
+    }
   }
 
   image(item) {
