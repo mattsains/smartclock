@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import fetch from 'cross-fetch';
+
 import Platform from './renderer/platform';
 
 import Image from './components/primatives/image';

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mattsains/smartclock#readme",
   "dependencies": {
     "canvas": "^2.5.0",
+    "cross-fetch": "^3.0.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-reconciler": "^0.20.4"
