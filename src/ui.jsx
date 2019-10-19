@@ -21,18 +21,34 @@ export default class UI extends React.Component {
 
   componentDidMount() {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=Seattle&appId=${apiKey}`)
-      .then((result) => { return result.json(); })
+      .then(result => result.json())
       .then((result) => {
+        console.log(result);
         const temp = Math.round(result.main.temp - 273.15);
-        const condition = result.weather[0].main;
-
-        const imgSrc = ({
-          'Clear': 'sun',
-          'Clouds': 'cloudy'
-        })[condition];
+        const imgSrc = this.getWeatherImageSrc(result);
 
         this.setState({ loading: false, imgSrc, temp });
       });
+  }
+
+  getWeatherImageSrc(weather) {
+    const condition = weather.weather[0].main;
+
+    let imgSrc = ({
+      Clear: 'sun',
+      Clouds: 'cloudy',
+      Rain: 'rain',
+    })[condition];
+
+    if (condition === 'Rain') {
+      if (weather.weather[0].description.includes('light rain')) {
+        imgSrc = 'rain_light';
+      } else if (weather.weather[0].description.includes('heavy rain')) {
+        imgSrc = 'rain_heavy';
+      }
+    }
+
+    return imgSrc;
   }
 
   render() {
